@@ -1,0 +1,3169 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/2/2023 6:46:13 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-665CT7P"
+  DTS:CreatorName="DESKTOP-665CT7P\Lenovo"
+  DTS:DTSID="{C651475F-CCF4-483F-897F-264038F2BC42}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5314.0"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="DimTiempo"
+  DTS:PackageType="5"
+  DTS:VersionBuild="35"
+  DTS:VersionGUID="{1C2B0D43-C820-4DDE-8C3D-153DDD6E8CF7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{621ECD2C-DDC0-4DBF-87B9-1A95D8DAB9C7}"
+      DTS:ObjectName="LocalHost.DATAMART_NORTHWND">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DATAMART_NORTHWND;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DimProducto-{621ECD2C-DDC0-4DBF-87B9-1A95D8DAB9C7}LocalHost.DATAMART_NORTHWND;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{13ACEFE9-1FFD-4B0A-9B8B-89F45352D886}"
+      DTS:ObjectName="LocalHost.STAGE_NORTHWND">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=STAGE_NORTHWND;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-DimProducto-{13ACEFE9-1FFD-4B0A-9B8B-89F45352D886}LocalHost.STAGE_NORTHWND;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{B168EE76-335B-4A41-89FC-0DDC2F33995F}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETLCantidadRegistrosModificados">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{82C23773-C7D7-41F0-9AD8-AF06837C8E34}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="ETLCantidadRegistrosNuevos">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DF Dim Tiempo"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Tarea Flujo de datos"
+      DTS:DTSID="{80DBE18F-D495-44B4-8C11-DDCCB72BF08B}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF Dim Tiempo"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF Dim Tiempo\Cantidad Registros Nuevos"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Recuento de filas;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Cuenta las filas a medida que pasan por un flujo de datos. Por ejemplo, se usa el número de filas procesadas para determinar si deben o no realizarse operaciones de limpieza o actualizar el texto de un mensaje de correo electrónico para comunicar el estado de procesamiento."
+              name="Cantidad Registros Nuevos">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el recuento de filas."
+                  name="VariableName">User::ETLCantidadRegistrosNuevos</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\Cantidad Registros Nuevos.Inputs[Entrada de Recuento de filas 1]"
+                  hasSideEffects="true"
+                  name="Entrada de Recuento de filas 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Cantidad Registros Nuevos.Outputs[Salida de Recuento de filas 1]"
+                  name="Salida de Recuento de filas 1"
+                  synchronousInputId="Package\DF Dim Tiempo\Cantidad Registros Nuevos.Inputs[Entrada de Recuento de filas 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Combinación de mezcla"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Combinación de mezcla;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;1"
+              description="Combina dos flujos de datos ordenados en uno solo mediante la combinación FULL, LEFT o INNER. Se recomienda esta transformación cuando se pueden ordenar los flujos de datos en sus orígenes."
+              name="Combinación de mezcla"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el tipo de combinación que se debe realizar."
+                  name="JoinType"
+                  typeConverter="JoinType">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el número de columnas de la clave de ordenación."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores NULL se tratan como valores iguales."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indica la cantidad máxima solicitada de búferes por entrada antes del bloqueo."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla]"
+                  hasSideEffects="true"
+                  name="Entrada izquierda de combinación de mezcla">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_FechaActual]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Tiempo_FechaActual"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Anio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Anio"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Trimestre]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Trimestre"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Mes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Mes"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Semana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Semana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeAnio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeAnio"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeMes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeMes"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeSemana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_EsFinSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFinSemana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_EsFeriado]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFeriado"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Comentarios]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="20"
+                      cachedName="Tiempo_Comentarios"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Comentarios]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_SemanaCalendario]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanaCalendario"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanasDelAñoLaborales"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_AñoBisiesto]"
+                      cachedDataType="ui1"
+                      cachedName="Tiempo_AñoBisiesto"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[StageMD5]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="StageMD5"
+                      lineageId="Package\DF Dim Tiempo\Stage MD5.Outputs[Salida 0].Columns[StageMD5]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla]"
+                  hasSideEffects="true"
+                  name="Entrada derecha de combinación de mezcla">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla].Columns[Tiempo_FechaActual]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Tiempo_FechaActual"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla].Columns[DataMartMD5]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DataMartMD5"
+                      lineageId="Package\DF Dim Tiempo\Data Mart MD5.Outputs[Salida 0].Columns[DataMartMD5]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla]"
+                  isSorted="true"
+                  name="Salida de combinación de mezcla">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_FechaActual]"
+                      name="Tiempo_FechaActual"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_FechaActual]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Anio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Anio]"
+                      name="Tiempo_Anio">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Anio]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Trimestre]"
+                      name="Tiempo_Trimestre">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Trimestre]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Mes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Mes]"
+                      name="Tiempo_Mes">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Mes]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Semana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Semana]"
+                      name="Tiempo_Semana">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Semana]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeAnio]"
+                      name="Tiempo_DiaDeAnio">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeAnio]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeMes]"
+                      name="Tiempo_DiaDeMes">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeMes]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeSemana]"
+                      name="Tiempo_DiaDeSemana">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_DiaDeSemana]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFinSemana]"
+                      name="Tiempo_EsFinSemana">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_EsFinSemana]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFeriado]"
+                      name="Tiempo_EsFeriado">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_EsFeriado]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Comentarios]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Comentarios]"
+                      name="Tiempo_Comentarios">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_Comentarios]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanaCalendario]"
+                      name="Tiempo_SemanaCalendario">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_SemanaCalendario]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      name="Tiempo_SemanasDelAñoLaborales">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_SemanasDelAñoLaborales]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_AñoBisiesto]"
+                      name="Tiempo_AñoBisiesto">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[Tiempo_AñoBisiesto]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[StageMD5]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[StageMD5]"
+                      name="StageMD5">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla].Columns[StageMD5]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[DataMartMD5]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[DataMartMD5]"
+                      name="DataMartMD5">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="La columna de entrada asociada a esta columna de salida"
+                          name="InputColumnID">#{Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla].Columns[DataMartMD5]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Data Mart Dim Tiempo"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Tiempo_Skey, 
+		Tiempo_FechaActual,
+		Tiempo_Anio,
+		Tiempo_Trimestre,
+		Tiempo_Mes,
+		Tiempo_Semana,
+		Tiempo_DiaDeAnio,
+		Tiempo_DiaDeMes,
+		Tiempo_DiaDeSemana,
+		Tiempo_EsFinSemana,
+		Tiempo_EsFeriado,
+		Tiempo_SemanaCalendario,
+		Tiempo_SemanasDelAñoLaborales,
+		Tiempo_AñoBisiesto
+FROM [DATAMART_NORTHWND].[dbo].[Dim_Tiempo]
+ORDER BY Tiempo_FechaActual</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB]"
+                  isSorted="true"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Skey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Skey]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Skey]"
+                      name="Tiempo_Skey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      name="Tiempo_FechaActual"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]"
+                      name="Tiempo_Anio"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      name="Tiempo_Trimestre"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]"
+                      name="Tiempo_Mes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]"
+                      name="Tiempo_Semana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      name="Tiempo_DiaDeAnio"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      name="Tiempo_DiaDeMes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      name="Tiempo_DiaDeSemana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      name="Tiempo_EsFinSemana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      name="Tiempo_EsFeriado"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      name="Tiempo_SemanaCalendario"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      name="Tiempo_SemanasDelAñoLaborales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      name="Tiempo_AñoBisiesto"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Skey]"
+                      dataType="i4"
+                      name="Tiempo_Skey" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      name="Tiempo_FechaActual" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      dataType="i4"
+                      name="Tiempo_Anio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      name="Tiempo_Trimestre" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      dataType="i4"
+                      name="Tiempo_Mes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      dataType="i4"
+                      name="Tiempo_Semana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeAnio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeMes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      name="Tiempo_EsFinSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      name="Tiempo_EsFeriado" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      name="Tiempo_SemanaCalendario" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      name="Tiempo_SemanasDelAñoLaborales" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      name="Tiempo_AñoBisiesto" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Skey]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Skey]"
+                      name="Tiempo_Skey" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      name="Tiempo_FechaActual" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Anio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Anio]"
+                      name="Tiempo_Anio" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      name="Tiempo_Trimestre" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Mes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Mes]"
+                      name="Tiempo_Mes" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Semana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Semana]"
+                      name="Tiempo_Semana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      name="Tiempo_DiaDeAnio" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      name="Tiempo_DiaDeMes" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      name="Tiempo_DiaDeSemana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      name="Tiempo_EsFinSemana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      name="Tiempo_EsFeriado" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      name="Tiempo_SemanaCalendario" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      name="Tiempo_SemanasDelAñoLaborales" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      name="Tiempo_AñoBisiesto" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Data Mart MD5"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;13"
+              description="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma."
+              name="Data Mart MD5"
+              version="13">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Almacena el código fuente del componente"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Almacena la representación binaria del componente"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del proyecto de Microsoft Visual Studio Tools para Aplicaciones. Los nombres de proyecto deben ser únicos en el paquete."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_7c29baaeb1014bf0bc73ea9695afacd9</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el lenguaje de programación que utiliza el script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">VisualBasic</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de solo lectura."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de lectura/escritura."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Lista de puntos de interrupción presentes en el script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Suma de comprobación para comparar los metadatos del componente con los códigos compilados."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0]"
+                  hasSideEffects="true"
+                  name="Entrada 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_FechaActual]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Tiempo_FechaActual"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_Anio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Anio"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_Trimestre]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Trimestre"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_Mes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Mes"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_Semana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Semana"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeAnio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeAnio"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeMes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeMes"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeSemana"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_EsFinSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFinSemana"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_EsFeriado]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFeriado"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_SemanaCalendario]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanaCalendario"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanasDelAñoLaborales"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0].Columns[Tiempo_AñoBisiesto]"
+                      cachedDataType="ui1"
+                      cachedName="Tiempo_AñoBisiesto"
+                      lineageId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Data Mart MD5.Outputs[Salida 0]"
+                  name="Salida 0"
+                  synchronousInputId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Data Mart MD5.Outputs[Salida 0].Columns[DataMartMD5]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF Dim Tiempo\Data Mart MD5.Outputs[Salida 0].Columns[DataMartMD5]"
+                      name="DataMartMD5" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="Destino de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;4"
+              description="Destino de OLE DB"
+              name="Destino Data Mart Tiempo"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset">[dbo].[Dim_Tiempo]</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si los valores proporcionados para columnas de identidad se van a copiar al destino. Si es False, los valores de las columnas de identidad se generan automáticamente en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indica si las columnas que contienen NULL tendrán NULL insertado en el destino. Si es False, las columnas que contienen NULL tendrán sus valores predeterminados insertados en el destino. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica opciones para usar con la carga rápida. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadOptions"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica cuándo se emiten confirmaciones durante la inserción de datos. El valor 0 especifica que se emitirá una confirmación al final de la inserción de datos. Solo se aplica si está activada la carga rápida."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB]"
+                  errorOrTruncationOperation="Insertar"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="Entrada de destino de OLE DB">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_FechaActual]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Tiempo_FechaActual"
+                      cachedSortKeyPosition="1"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_FechaActual]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_Anio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Anio"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Anio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_Trimestre]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Trimestre"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Trimestre]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_Mes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Mes"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Mes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_Semana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Semana"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_Semana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeAnio"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeAnio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeMes"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeMes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeSemana"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_DiaDeSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFinSemana"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFinSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_EsFeriado]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFeriado"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_EsFeriado]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanaCalendario"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanaCalendario]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanasDelAñoLaborales"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_SemanasDelAñoLaborales]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      cachedDataType="ui1"
+                      cachedName="Tiempo_AñoBisiesto"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[Tiempo_AñoBisiesto]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Skey]"
+                      dataType="i4"
+                      name="Tiempo_Skey" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      name="Tiempo_FechaActual" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      dataType="i4"
+                      name="Tiempo_Anio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      name="Tiempo_Trimestre" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      dataType="i4"
+                      name="Tiempo_Mes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      dataType="i4"
+                      name="Tiempo_Semana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeAnio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeMes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      name="Tiempo_EsFinSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      name="Tiempo_EsFeriado" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      name="Tiempo_SemanaCalendario" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      name="Tiempo_SemanasDelAñoLaborales" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      name="Tiempo_AñoBisiesto" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Outputs[Salida de error de destino de OLE DB]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de destino de OLE DB"
+                  synchronousInputId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Outputs[Salida de error de destino de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Outputs[Salida de error de destino de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\División condicional"
+              componentClassID="Microsoft.ConditionalSplit"
+              contactInfo="División condicional;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;0"
+              description="Enruta filas de datos a diferentes salidas según el contenido de los datos. Se usan condiciones (expresiones de SSIS) para especificar las filas que se van a enrutar. Por ejemplo, se usa para separar los registros que deben limpiarse de los registros listos para ser cargados o para enrutar solamente un subconjunto de registros."
+              name="División condicional"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional]"
+                  description="Entrada en la transformación División condicional"
+                  name="Entrada de división condicional">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional].Columns[DataMartMD5]"
+                      cachedDataType="wstr"
+                      cachedLength="255"
+                      cachedName="DataMartMD5"
+                      lineageId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[DataMartMD5]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\División condicional.Outputs[Registro Nuevo]"
+                  description="Salida 1 de la transformación División condicional"
+                  errorOrTruncationOperation="Cálculo"
+                  errorRowDisposition="FailComponent"
+                  exclusionGroup="1"
+                  name="Registro Nuevo"
+                  synchronousInputId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional]"
+                  truncationRowDisposition="FailComponent">
+                  <properties>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la expresión. Esta versión de expresión usa identificadores de linaje en lugar de nombres de columna."
+                      name="Expression">[ISNULL](#{Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla].Columns[DataMartMD5]})</property>
+                    <property
+                      containsID="true"
+                      dataType="System.String"
+                      description="Especifica la versión descriptiva de la expresión. Esta versión de expresión usa nombres de columna."
+                      expressionType="Notify"
+                      name="FriendlyExpression">ISNULL(DataMartMD5)</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Especifica la posición de la condición en la lista de condiciones que evalúa la transformación. El orden de evaluación es del menor al mayor valor."
+                      name="EvaluationOrder">0</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF Dim Tiempo\División condicional.Outputs[Salida predeterminada de división condicional]"
+                  description="Salida predeterminada de la transformación División condicional"
+                  exclusionGroup="1"
+                  name="Salida predeterminada de división condicional"
+                  synchronousInputId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional]">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      name="IsDefaultOut">true</property>
+                  </properties>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DF Dim Tiempo\División condicional.Outputs[Salida de error de división condicional]"
+                  description="Salida de error de la transformación División condicional"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Salida de error de división condicional"
+                  synchronousInputId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\División condicional.Outputs[Salida de error de división condicional].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Stage MD5"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;13"
+              description="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma."
+              name="Stage MD5"
+              version="13">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Almacena el código fuente del componente"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="30">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[My Project\AssemblyInfo.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Imports System
+Imports System.Reflection
+Imports System.Runtime.InteropServices
+
+' General Information about an assembly is controlled through the following 
+' set of attributes. Change these attribute values to modify the information
+' associated with an assembly.
+
+' Review the values of the assembly attributes
+
+<Assembly: AssemblyTitle("SC_b7c2e9c69a3d47c7b3a03077298214e2")> 
+<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyCompany("")> 
+<Assembly: AssemblyProduct("SC_b7c2e9c69a3d47c7b3a03077298214e2")> 
+<Assembly: AssemblyCopyright("Copyright @  2024")> 
+<Assembly: AssemblyTrademark("")> 
+<Assembly: CLSCompliant(True)> 
+
+<Assembly: ComVisible(False)> 
+
+'The following GUID is for the ID of the typelib if this project is exposed to COM
+<Assembly: Guid("8b7c9a26-14fc-4921-b721-e2e8b49817c2")> 
+
+' Version information for an assembly consists of the following four values:
+'
+'      Major Version
+'      Minor Version 
+'      Build Number
+'      Revision
+'
+' You can specify all the values or you can default the Build and Revision Numbers 
+' by using the '*' as shown below:
+' <Assembly: AssemblyVersion("1.0.*")>
+
+<Assembly: AssemblyVersion("1.0.0.0")> 
+<Assembly: AssemblyFileVersion("1.0.0.0")> 
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[ComponentWrapper.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[' THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+' Microsoft SQL Server Integration Services component wrapper
+' This module defines the base class for your component
+' THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+
+Imports System
+Imports System.Data
+Imports Microsoft.SqlServer.Dts.Pipeline
+Imports Microsoft.SqlServer.Dts.Pipeline.Wrapper
+Imports Microsoft.SqlServer.Dts.Runtime.Wrapper
+
+<CLSCompliant(False)> _
+Public Class UserComponent
+    Inherits ScriptComponent
+
+    Public Connections As New Connections(Me)
+    Public Variables As New Variables(Me)
+
+    Public Overrides Sub ProcessInput(ByVal InputID As Integer, ByVal InputName As String, ByVal Buffer As PipelineBuffer, ByVal OutputMap As OutputNameMap)
+
+        If InputName.Equals("Entrada 0", StringComparison.Ordinal) Then
+            Entrada0_ProcessInput(New Entrada0Buffer(Buffer, GetColumnIndexes(InputID), OutputMap))
+        End If
+
+    End Sub
+
+    Public Overridable Sub Entrada0_ProcessInput(ByVal Buffer As Entrada0Buffer)
+
+        While Buffer.NextRow()
+            Entrada0_ProcessInputRow(Buffer)
+        End While
+
+    End Sub
+
+    Public Overridable Sub Entrada0_ProcessInputRow(ByVal Row As Entrada0Buffer)
+
+    End Sub
+
+End Class
+
+<CLSCompliant(False)> _
+Public Class Connections
+
+    Dim ParentComponent As ScriptComponent
+
+    <CLSCompliant(False)> _
+    Public Sub New(ByVal Component As ScriptComponent)
+        ParentComponent = Component
+    End Sub
+
+End Class
+
+<CLSCompliant(False)> _
+Public Class Variables
+
+    Dim ParentComponent As ScriptComponent
+
+    <CLSCompliant(False)> _
+    Public Sub New(ByVal Component As ScriptComponent)
+        ParentComponent = Component
+    End Sub
+
+End Class
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[main.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[#Region "Help:  Introduction to the Script Component"
+' The Script Component allows you to perform virtually any operation that can be accomplished in
+' a .Net application within the context of an Integration Services data flow.
+
+' Expand the other regions which have "Help" prefixes for examples of specific ways to use
+' Integration Services features within this script component.
+#End Region
+
+#Region "Imports"
+Imports System
+Imports System.Data
+Imports System.Math
+Imports Microsoft.SqlServer.Dts.Pipeline.Wrapper
+Imports Microsoft.SqlServer.Dts.Runtime.Wrapper
+#End Region
+
+' This is the class to which to add your code.  Do not change the name, attributes, or parent
+' of this class.
+<Microsoft.SqlServer.Dts.Pipeline.SSISScriptComponentEntryPointAttribute> _
+<CLSCompliant(False)> _
+Public Class ScriptMain
+    Inherits UserComponent
+
+#Region "Help:  Using Integration Services variables and parameters"
+    'To use a variable in this script, first ensure that the variable has been added to
+    'either the list contained in the ReadOnlyVariables property or the list contained in
+    'the ReadWriteVariables property of this script component, according to whether or not your
+    'code needs to write into the variable.  To do so, save this script, close this instance of
+    'Visual Studio, and update the ReadOnlyVariables and ReadWriteVariables properties.
+    'To use a parameter in this script, follow the same steps. Parameters are always read-only.
+
+    'Example of reading from a variable or parameter:
+    ' startTime = Variables.MyStartTime;
+
+    'Example of writing to a variable:
+    ' Variables.myStringVariable = "new value";
+#End Region
+
+#Region "Help:  Using Integration Services Connnection Managers"
+    'Some types of connection managers can be used in this script component.  See the help topic
+    '"Working with Connection Managers Programatically" for details.
+
+    'To use a connection manager in this script, first ensure that the connection manager has
+    'been added to either the list of connection managers on the Connection Managers page of the
+    'script component editor.  To add the connection manager, save this script, close this instance of
+    ' Visual Studio, and add the Connection Manager to the list.
+
+    'If the component needs to hold a connection open while processing rows, override the
+    'AcquireConnections and ReleaseConnections methods.
+
+    'Example of using an ADO.Net connection manager to acquire a SqlConnection:
+    ' Dim rawConnection As Object = Connections.SalesDB.AcquireConnection(Transaction)
+    ' Dim salesDBConn As SqlConnection = CType(rawConnection, SqlConnection)
+
+    'Example of using a File connection manager to acquire a file path:
+    ' Dim rawConnection As Object = Connections.Prices_zip.AcquireConnection(Transaction)
+    ' Dim filePath As String = CType(rawConnection, String)
+
+    'Example of releasing a connection manager:
+    ' Connections.SalesDB.ReleaseConnection(rawConnection)
+#End Region
+
+#Region "Help:  Firing Integration Services Events"
+    'This script component can fire events.
+
+    'Example of firing an error event:
+    ' ComponentMetaData.FireError(10, "Process Values", "Bad value", "", 0, cancel)
+
+    'Example of firing an information event:
+    ' ComponentMetaData.FireInformation(10, "Process Values", "Processing has started", "", 0, fireAgain)
+
+    'Example of firing a warning event:
+    ' ComponentMetaData.FireWarning(10, "Process Values", "No rows were received", "", 0)
+
+#End Region
+
+    'This method is called once, before rows begin to be processed in the data flow.
+    '
+    'You can remove this method if you don't need to do anything here.
+    Public Overrides Sub PreExecute()
+        MyBase.PreExecute()
+        '
+        ' Add your code here
+        '
+    End Sub
+
+    ' This method is called after all the rows have passed through this component.
+    '
+    ' You can delete this method if you don't need to do anything here.
+    Public Overrides Sub PostExecute()
+        MyBase.PostExecute()
+        '
+        ' Add your code here
+        '
+    End Sub
+
+    'This method is called once for every row that passes through the component from Entrada0.
+    '
+    'Example of reading a value from a column in the the row:
+    ' zipCode = Row.ZipCode
+    '
+    'Example of writing a value to a column in the row:
+    ' Row.ZipCode = zipCode
+    Public Overrides Sub Entrada0_ProcessInputRow(ByVal Row As Entrada0Buffer)
+        '
+        ' Add your code here
+        '
+    End Sub
+
+End Class
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[My Project\Settings.settings]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version='1.0' encoding='iso-8859-1'?>
+<SettingsFile xmlns="uri:settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="MySettings">
+  <Profiles>
+    <Profile Name="(Default)" />
+  </Profiles>
+  <Settings />
+</SettingsFile>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_b7c2e9c69a3d47c7b3a03077298214e2.vbproj]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectTypeGuids>{30D016F9-3734-4E33-A861-5E7D899E18F3};{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{bbc58a8d-04bb-4ccc-97ce-7d4ef552a921}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>My Project</AppDesignerFolder>
+    <RootNamespace>SC_b7c2e9c69a3d47c7b3a03077298214e2</RootNamespace>
+    <AssemblyName>SC_b7c2e9c69a3d47c7b3a03077298214e2</AssemblyName>
+    <TargetFrameworkVersion>v4.7</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>true</ResolveAssemblyReferenceIgnoreTargetFrameworkAttributeVersionMismatch>
+    <TargetFrameworkProfile></TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>.\bin\Debug\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>false</DebugSymbols>
+    <Optimize>true</Optimize>
+    <OutputPath>.\bin\Release\</OutputPath>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <!-- This sections specifies references for the project. -->
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.SqlServer.TxScript, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSRuntimeWrap, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.DTSPipelineWrap, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Reference Include="Microsoft.SqlServer.PipelineHost, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91" />
+    <Compile Include="main.vb" />
+    <Compile Include="BufferWrapper.vb" />
+    <Compile Include="ComponentWrapper.vb" />
+  </ItemGroup>
+  <!-- Visual Basic supports Importing namespaces (equivalent to using statements in C#).-->
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Data" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="My Project\" />
+    <Compile Include="My Project\AssemblyInfo.vb">
+      <SubType>Code</SubType>
+    </Compile>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+    </EmbeddedResource>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <!-- Include the build rules for a VB project.-->
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- This section defines VSTA properties that describe the host-changable project properties. -->
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{30D016F9-3734-4E33-A861-5E7D899E18F3}">
+        <ProjectProperties HostName="SSIS_SC160" HostPackage="{B3A685AA-7EAF-4BC6-9940-57959FA5AC07}" ApplicationType="usd" Language="vb" TemplatesPath="" DebugInfoExeName="" DebugInfoCommandLine="" DebugInfoWorkingDir="" IconImageList="" />
+        <Host Name="SSIS_SC160" IconIndex=""></Host>
+        <ProjectClient>
+          <HostIdentifier>SSIS_SC160</HostIdentifier>
+        </ProjectClient>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[My Project\Settings.Designer.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA['------------------------------------------------------------------------------
+' <autogenerated>
+'     This code was generated by a tool.
+'
+'     Changes to this file may cause incorrect behavior and will be lost if
+'     the code is regenerated.
+' </autogenerated>
+'------------------------------------------------------------------------------
+
+Option Strict Off
+Option Explicit On
+
+
+
+Partial Friend NotInheritable Class MySettings
+    Inherits System.Configuration.ApplicationSettingsBase
+
+    Private Shared m_Value As MySettings
+
+    Private Shared m_SyncObject As Object = New Object
+
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Public Shared ReadOnly Property Value() As MySettings
+        Get
+            If (MySettings.m_Value Is Nothing) Then
+                System.Threading.Monitor.Enter(MySettings.m_SyncObject)
+                If (MySettings.m_Value Is Nothing) Then
+                    Try
+                        MySettings.m_Value = New MySettings
+                    Finally
+                        System.Threading.Monitor.Exit(MySettings.m_SyncObject)
+                    End Try
+                End If
+            End If
+            Return MySettings.m_Value
+        End Get
+    End Property
+End Class
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[BufferWrapper.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[' THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+' Microsoft SQL Server Integration Services buffer wrappers
+' This module defines classes for accessing data flow buffers
+' THIS IS AUTO-GENERATED CODE THAT WILL BE OVERWRITTEN! DO NOT EDIT!
+
+
+Option Strict Off   ' This allows usage of PipelineBuffer typed accessors.
+
+Imports System
+Imports System.Data
+Imports Microsoft.SqlServer.Dts.Pipeline
+Imports Microsoft.SqlServer.Dts.Pipeline.Wrapper
+
+<CLSCompliant(False)> _
+Public Class Entrada0Buffer
+    Inherits ScriptBuffer
+
+    Public Sub New(ByVal Buffer As PipelineBuffer, ByVal BufferColumnIndexes As Integer(), ByVal OutputMap As OutputNameMap)
+        MyBase.New(Buffer, BufferColumnIndexes, OutputMap)
+    End Sub
+
+    Public ReadOnly Property [TiempoFechaActual]() As DateTime
+        Get
+            Return Buffer.GetDateTime(Me.BufferColumnIndexes(0))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoFechaActual_IsNull] As Boolean
+        Get
+            Return IsNull(0)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoAnio]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(1))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoAnio_IsNull] As Boolean
+        Get
+            Return IsNull(1)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoTrimestre]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(2))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoTrimestre_IsNull] As Boolean
+        Get
+            Return IsNull(2)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoMes]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(3))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoMes_IsNull] As Boolean
+        Get
+            Return IsNull(3)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoSemana]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(4))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoSemana_IsNull] As Boolean
+        Get
+            Return IsNull(4)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoDiaDeAnio]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(5))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoDiaDeAnio_IsNull] As Boolean
+        Get
+            Return IsNull(5)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoDiaDeMes]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(6))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoDiaDeMes_IsNull] As Boolean
+        Get
+            Return IsNull(6)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoDiaDeSemana]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(7))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoDiaDeSemana_IsNull] As Boolean
+        Get
+            Return IsNull(7)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoEsFinSemana]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(8))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoEsFinSemana_IsNull] As Boolean
+        Get
+            Return IsNull(8)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoEsFeriado]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(9))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoEsFeriado_IsNull] As Boolean
+        Get
+            Return IsNull(9)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoSemanaCalendario]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(10))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoSemanaCalendario_IsNull] As Boolean
+        Get
+            Return IsNull(10)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoSemanasDelAñoLaborales]() As Int32
+        Get
+            Return Buffer.GetInt32(Me.BufferColumnIndexes(11))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoSemanasDelAñoLaborales_IsNull] As Boolean
+        Get
+            Return IsNull(11)
+        End Get
+    End Property
+
+    Public ReadOnly Property [TiempoAñoBisiesto]() As Byte
+        Get
+            Return Buffer.GetByte(Me.BufferColumnIndexes(12))
+        End Get
+    End Property
+    Public ReadOnly Property [TiempoAñoBisiesto_IsNull] As Boolean
+        Get
+            Return IsNull(12)
+        End Get
+    End Property
+
+    Public WriteOnly Property [StageMD5]() As String
+        Set
+            Me(13) = Value
+        End Set
+    End Property
+    Public WriteOnly Property [StageMD5_IsNull] As Boolean
+        Set
+            If (value)
+                SetNull(13)
+            Else
+                Throw new InvalidOperationException("La propiedad IsNull no puede establecerse en False. En su lugar, asigne un valor a la columna.")
+            End If
+        End Set
+    End Property
+
+    Public Overloads Function NextRow() As Boolean
+        NextRow = MyBase.NextRow()
+    End Function
+
+    Public Overloads Function EndOfRowset() As Boolean
+        EndOfRowset = MyBase.EndOfRowset
+    End Function
+
+End Class
+]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[Project]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF16LE]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="UTF-16" standalone="yes"?>
+<c:Project xmlns:c="http://schemas.microsoft.com/codeprojectml/2010/08/main" xmlns:msb="http://schemas.microsoft.com/developer/msbuild/2003" runtimeVersion="4.0" schemaVersion="1.0">
+  <msb:PropertyGroup>
+    <msb:CodeName>SC_b7c2e9c69a3d47c7b3a03077298214e2</msb:CodeName>
+    <msb:Language>msBuild</msb:Language>
+    <msb:DisplayName>SC_b7c2e9c69a3d47c7b3a03077298214e2</msb:DisplayName>
+    <msb:ProjectId>{3D4E46F1-CA9B-4350-8D3A-34B7F79C848D}</msb:ProjectId>
+  </msb:PropertyGroup>
+  <msb:ItemGroup>
+    <msb:Project Include="SC_b7c2e9c69a3d47c7b3a03077298214e2.vbproj" />
+    <msb:File Include="My Project\Settings.Designer.vb" />
+    <msb:File Include="main.vb" />
+    <msb:File Include="BufferWrapper.vb" />
+    <msb:File Include="My Project\Resources.resx" />
+    <msb:File Include="ComponentWrapper.vb" />
+    <msb:File Include="My Project\AssemblyInfo.vb" />
+    <msb:File Include="My Project\Resources.Designer.vb" />
+    <msb:File Include="My Project\Settings.settings" />
+  </msb:ItemGroup>
+</c:Project>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[My Project\Resources.resx]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+</root>]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[My Project\Resources.Designer.vb]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[UTF8]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA['------------------------------------------------------------------------------
+' <autogenerated>
+'     This code was generated by a tool.
+'
+'     Changes to this file may cause incorrect behavior and will be lost if
+'     the code is regenerated.
+' </autogenerated>
+'------------------------------------------------------------------------------
+
+Option Strict Off
+Option Explicit On
+
+
+Namespace My.Resources
+    
+    '''<summary>
+    '''   A strongly-typed resource class, for looking up localized strings, etc.
+    '''</summary>
+    'This class was auto-generated by the Strongly Typed Resource Builder
+    'class via a tool like ResGen or Visual Studio.NET.
+    'To add or remove a member, edit your .ResX file then rerun ResGen
+    'with the /str option, or rebuild your VS project.
+    Class MyResources
+        
+        Private Shared _resMgr As System.Resources.ResourceManager
+        
+        Private Shared _resCulture As System.Globalization.CultureInfo
+        
+        Friend Sub New()
+            MyBase.New
+        End Sub
+        
+        '''<summary>
+        '''   Returns the cached ResourceManager instance used by this class.
+        '''</summary>
+        <System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        Public Shared ReadOnly Property ResourceManager() As System.Resources.ResourceManager
+            Get
+                If (_resMgr Is Nothing) Then
+                    Dim temp As System.Resources.ResourceManager = New System.Resources.ResourceManager("My.Resources.MyResources", GetType(MyResources).Assembly)
+                    _resMgr = temp
+                End If
+                Return _resMgr
+            End Get
+        End Property
+        
+        '''<summary>
+        '''   Overrides the current thread's CurrentUICulture property for all
+        '''   resource lookups using this strongly typed resource class.
+        '''</summary>
+        <System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)>  _
+        Public Shared Property Culture() As System.Globalization.CultureInfo
+            Get
+                Return _resCulture
+            End Get
+            Set
+                _resCulture = value
+            End Set
+        End Property
+    End Class
+End Namespace
+]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Almacena la representación binaria del componente"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="2">
+                    <arrayElement
+                      dataType="System.String"><![CDATA[SC_b7c2e9c69a3d47c7b3a03077298214e2.dll]]></arrayElement>
+                    <arrayElement
+                      dataType="System.String"><![CDATA[TVqQAAMAAAAEAAAA//8AALgAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAgAAAAA4fug4AtAnNIbgBTM0hVGhpcyBwcm9ncmFtIGNhbm5vdCBiZSBydW4gaW4gRE9TIG1v
+ZGUuDQ0KJAAAAAAAAABQRQAATAEDAF93mWUAAAAAAAAAAOAAIiALAVAAACQAAAAIAAAAAAAAMkMA
+AAAgAAAAYAAAAAAAEAAgAAAAAgAABAAAAAAAAAAGAAAAAAAAAACgAAAAAgAAAAAAAAMAYIUAABAA
+ABAAAAAAEAAAEAAAAAAAABAAAAAAAAAAAAAAAOBCAABPAAAAAGAAAEgEAAAAAAAAAAAAAAAAAAAA
+AAAAAIAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAIAAACAAAAAAAAAAAAAAACCAAAEgAAAAAAAAAAAAAAC50ZXh0AAAAOCMAAAAgAAAAJAAAAAIA
+AAAAAAAAAAAAAAAAACAAAGAucnNyYwAAAEgEAAAAYAAAAAYAAAAmAAAAAAAAAAAAAAAAAABAAABA
+LnJlbG9jAAAMAAAAAIAAAAACAAAALAAAAAAAAAAAAAAAAAAAQAAAQgAAAAAAAAAAAAAAAAAAAAAU
+QwAAAAAAAEgAAAACAAUAjCQAAJwdAAABAAAAAAAAAChCAAC4AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAB4CKBgAAAoqHgIoGQAACiqmcxoAAAqAAQAABHMbAAAKgAIA
+AARzHAAACoADAAAEcx0AAAqABAAABCoufgEAAARvHgAACioufgIAAARvHwAACioufgMAAARvIAAA
+CioufgQAAARvIQAACioeAigiAAAKKq5+BQAABC0ecgEAAHDQBQAAAigjAAAKbyQAAApzJQAACoAF
+AAAEfgUAAAQqGn4GAAAEKh4CgAYAAAQqHgIoLwAABioeAigmAAAKKh4CKCcAAAoqBioqAgMEBSgo
+AAAKKlICeykAAAoCeyoAAAoWlG8rAAAKKiICFigsAAAKKlICeykAAAoCeyoAAAoXlG8tAAAKKiIC
+FygsAAAKKlICeykAAAoCeyoAAAoYlG8tAAAKKiICGCgsAAAKKlICeykAAAoCeyoAAAoZlG8tAAAK
+KiICGSgsAAAKKlICeykAAAoCeyoAAAoalG8tAAAKKiICGigsAAAKKlICeykAAAoCeyoAAAoblG8t
+AAAKKiICGygsAAAKKlICeykAAAoCeyoAAAoclG8tAAAKKiICHCgsAAAKKlICeykAAAoCeyoAAAod
+lG8tAAAKKiICHSgsAAAKKlICeykAAAoCeyoAAAoelG8tAAAKKiICHigsAAAKKlYCeykAAAoCeyoA
+AAofCZRvLQAACiomAh8JKCwAAAoqVgJ7KQAACgJ7KgAACh8KlG8tAAAKKiYCHwooLAAACipWAnsp
+AAAKAnsqAAAKHwuUby0AAAoqJgIfCygsAAAKKlYCeykAAAoCeyoAAAofDJRvLgAACiomAh8MKCwA
+AAoqKgIfDQMoLwAACipeAywJAh8NKDAAAAoqcjMAAHBzMQAACnoAEzABAAkAAAABAAARAigyAAAK
+CgYqAAAAEzABAAkAAAABAAARAigzAAAKCgYqfgIoNAAACgICczMAAAZ9BwAABAICczQAAAZ9CAAA
+BCqSBHLyAABwGm81AAAKLBUCBQIDKDYAAAoOBHMQAAAGbzEAAAYqSisHAgNvMgAABgNvLQAABi3x
+KjoCKCIAAAoCA30JAAAEKjoCKCIAAAoCA30KAAAEKkJzIgAACig3AAAKgAwAAAQqHgIoOAAACiob
+MAEAPwAAAAAAAAB+CwAABC0yfgwAAAQoNwAACig5AAAKfgsAAAQtHHM2AAAGgAsAAATeEH4MAAAE
+KDcAAAooOgAACtx+CwAABCoAARAAAAIAHQAMKQAQAAAAADYCAyg3AAAKKDsAAAoqHgIoPAAACiou
+0AwAAAIoIwAACioeAig9AAAKKgAAEzABABQAAAACAAARAowFAAAbLQgoAQAAKworAgIKBioiA/4V
+BQAAGyoAAAATMAIAKAAAAAMAABECez8AAApvQAAACgoGjAgAABstEigCAAArCgJ7PwAACgZvQQAA
+CgYqSgIoIgAACgJzQgAACn0/AAAKKgBCU0pCAQABAAAAAAAMAAAAdjQuMC4zMDMxOQAAAAAFAGwA
+AAAIDAAAI34AAHQMAABIDAAAI1N0cmluZ3MAAAAAvBgAAAgBAAAjVVMAxBkAABAAAAAjR1VJRAAA
+ANQZAADIAwAAI0Jsb2IAAAAAAAAAAgAAAVcVogkJDwAAAPoBMwAWAAABAAAAMAAAAA0AAAANAAAA
+QAAAABIAAABCAAAAPQAAAAMAAAAFAAAAJAAAACUAAAAIAAAAAQAAAAUAAAABAAAAAgAAAAMAAAAC
+AAAAAAAoBQEAAAAAAAYAhwMJCgYAMQQJCgYAXgIpCQ8ArwoAAAYAnwJaBwYAagNaBwYAGARaBwYA
+pwNaBwYAwANaBwYA5gJaBwYA2wPjBgYAiwLDCQYABwLDCQYAMgNaBwYAAQOqBAoAKgLDCAoA8gES
+BQoAcgISBQ4AygGZCQ4A+QhdCQYAGgMpCQ4AtgLiCQ4AzgLlAAYAQgvjBg4A3wiZCQ4ATwPlAAYA
+jQHjBg4AAQDSBAoAFQLqBgYAswgpCgYAqwdFBxIA8QNpAQYAzQTjBhIAoghpARYAkwhpARIADAhp
+AQYAYAHjBhIAggtpAQoA2gEwBwYAQQIpCQYALwHjBgYAPAxaBwYAbAfjBgYAxgTjBgYAhgfjBgYA
+LQsJCgYAIQmZBAYACgnjBgAAAABlAAAAAAABAAEAAAAAACIHEQxNAAEAAQAAAAAA9wgRDFEAAQAC
+AAABEABJCxEMYQABAAMAAAAAAGsKOgphAAUACAABAAAABwc0ACAABwAMAAEAAACECDQAiQAHABAA
+AQAAAGQLNACZAAcALwABAAAAIQs0AGEACQAzAAEAAADgCjQAYQAKADQAAAEQAA8LNACdAAsANQAF
+AQAAiwkAAGEADQA4AAUBAAAQAAAAYQANAD8AMQBNCBoBMQAkCCIBMQA4CCoBMQBmCDIBEQACCToB
+EQC+AT4BBgAhC0IBBgDgCkYBAQByC0oBAQByC0oBEQBuBE8BEQA8C1MBIQDmC+IAUCAAAAAABhgU
+CQYAAQBYIAAAAAAGGBQJBgABAGAgAAAAABEYGglWAQEAiiAAAAAAEwjqCFoBAQCWIAAAAAATCBIH
+XwEBAKIgAAAAABMI2whkAQEAriAAAAAAEwh7CWkBAQC6IAAAAAADGBQJBgABAMIgAAAAABYIrwhu
+AQEA7iAAAAAAFgimAXMBAQD1IAAAAAAWCLIBeAEBAP0gAAAAAAYYFAkGAAIABSEAAAAAxgJPBAYA
+AgANIQAAAADGAloEBgACABUhAAAAAMYC8At+AQIAFyEAAAAABhgUCWUAAwAiIQAAAAAGCPwEhAEG
+ADchAAAAAAYI0QWaAAYAQCEAAAAABgjLB7sABgBVIQAAAAAGCCQGmgAGAF4hAAAAAAYIkgG7AAYA
+cyEAAAAABgi2BZoABgB8IQAAAAAGCE8JuwAGAJEhAAAAAAYIlAaaAAYAmiEAAAAABgjLALsABgCv
+IQAAAAAGCJ4FmgAGALghAAAAAAYItwe7AAYAzSEAAAAABggJBpoABgDWIQAAAAAGCDwJuwAGAOsh
+AAAAAAYIegaaAAYA9CEAAAAABgifALsABgAJIgAAAAAGCGQFmgAGABIiAAAAAAYItQC7AAYAJyIA
+AAAABgiBBZoABgAwIgAAAAAGCJcHuwAGAEYiAAAAAAYI7gWaAAYAUCIAAAAABgjaB7sABgBmIgAA
+AAAGCDoGmgAGAHAiAAAAAAYIvgq7AAYAhiIAAAAABgipBpoABgCQIgAAAAAGCPUHigEGAKYiAAAA
+AAYIXAaaAAYAsCIAAAAABghYABAABgC7IgAAAAAGCFAFFQAHANQiAAAAAIYACQyaAAgA7CIAAAAA
+hgBTC5oACAABIwAAAAAGGBQJBgAIACEjAAAAAMYC2QuOAQgARiMAAAAARgPQC34BDAAVIQAAAABG
+A/ALfgENAFkjAAAAAAYYFAmaAQ4AaCMAAAAABhgUCZoBDwB3IwAAAAARGBoJVgEQAIgjAAAAAAYY
+FAkGABAAkCMAAAAAFgh2BKEBEADsIwAAAADGAhoLtgAQAPojAAAAAMYCIwG7ABEAAiQAAAAAgwCK
+AaYBEQAOJAAAAADGAsQEvwARABgkAAAAABEAjACrAREAOCQAAAAAAQB4ALMBEgC6IAAAAAAGGBQJ
+BgATAEQkAAAAAAMICgFKABMAeCQAAAAABhgUCQYAEwAAAAEAkwQAAAEADQwAAAEAqAgAAAIA6goA
+AAMAGggAAAEAkwQAAAEAkwQAAAEAbgAAAAIAUwEAAAMAqAgAAAQAGggAAAEAqAgAAAEADQwAAAEA
+iAsAAAEAiAsAAAEACggAAAEAGgEAAAEAGgEJABQJAQARABQJBgAZABQJCgApABQJEAAxABQJEAA5
+ABQJEABBABQJEABJABQJEABRABQJEABZABQJFQBhABQJFQBpABQJEABxABQJEAB5ABQJEACBABQJ
+GgCRABQJIACpABQJBgCxABQJBgC5ABQJBgDRABQJJgDpABQJEAABARQJBgBBARQJBgCZABQJBgCh
+ABQJBgAMABQJBgAUABQJBgAcABQJBgAkABQJBgAMAAoBSgAUAAoBSgAcAAoBSgAkAAoBSgDBABQJ
+BgDZAEEBTwDZADgMVwDxABQJXQAxAU8EBgAxAVoEBgARARQJZQARAagIcQARAeoKdgAZAV0BegAR
+AcsGgQAZASsAhgAZAWYEiwARAdoGkAARAdIGAQBZARQJEAARAQkMmgARAVMLmgAxARQJBgBhARoL
+ngAxAf4KpgBxAYoErAA5ARQJBgB5AeQIsQB5AV8LsQDBABoLtgDBACMBuwDBAMQEvwCBAfsAywA0
+AOYL4gA8AHYESgA8AIAE+QA8ABQJBgApAKsAgAMuAAsA+QEuABMAAgIuABsAIQIuACMAKgIuACsA
+UwIuADMAUwIuADsAKgIuAEMAWQIuAEsAUwIuAFMAcAIuAFsAUwIuAGMAdgIuAGsAoAIuAHMArQJA
+AIsA9wJAAIMA/AJDAHsABQNDAIMA/AJJAKsAkQNjAHsABQNjAIMA/AJpAKsApQOAAIsA9wKDAJMA
+9wKDAJsA9wKDAHsABQOJAKsAsgOgAIsA9wKpAIMAIQLAAIsA9wLDALMA9wLDAFMAUwLJAIMAIQLg
+AIsA9wLjAFMAUwIDAVMAUwIjAVMAUwJDAVMAUwKDAYMA/AKDAaMAHgOjAYMA/AKjAVsAUwJpBLsA
+9wJgBlMAUwKABlMAUwIAB4MA/AIAB4sA9wIgB4MA/AIgB4sA9wJAB4MA/AJAB4sA9wJgB4MA/AJg
+B4sA9wKAB4sA9wKgB4sA9wLAB4sA9wLAB4MA/ALgB4sA9wIACIsA9wIACIMA/AKWAMMA1gAEAAEA
+BQAFAAcABwALACMADQAkAAAA+Qi7AQAAJAfAAQAA3wjFAQAAjQnKAQAAswjPAQAAwgHUAQAAAAXZ
+AQAA1QXfAQAAzwfjAQAAKAbfAQAAlgHjAQAAugXfAQAAUwnjAQAAmAbfAQAAzwDjAQAAogXfAQAA
+uwfjAQAADQbfAQAAQAnjAQAAfgbfAQAAowDjAQAAaAXfAQAAuQDjAQAAhQXfAQAAmwfjAQAA8gXf
+AQAA3gfjAQAAPgbfAQAAwgrjAQAArQbfAQAA+QfnAQAAYAbfAQAAXADrAQAAVAXfAQAAkwTvAQAA
+DgH0AQIABAADAAIABQAFAAIABgAHAAIABwAJAAIACQALAAIACgANAAEACwANAAIAEQAPAAIAEgAR
+AAIAEwATAAIAFAAVAAIAFQAXAAIAFgAZAAIAFwAbAAIAGAAdAAIAGQAfAAIAGgAhAAIAGwAjAAIA
+HAAlAAIAHQAnAAIAHgApAAIAHwArAAIAIAAtAAIAIQAvAAIAIgAxAAIAIwAzAAIAJAA1AAIAJQA3
+AAIAJgA5AAIAJwA7AAIAKAA9AAIAKQA/AAIAKgBBAAEAKwBDAAEALABFAAIANwBHAAIAPwBJAC4A
+NQA8AEMAyADbAOoA8QAEgAAAAQAAAAAAAAAAAAAAAAA0AAAABAAAAAAAAAAAAAAA/wDcAAAAAAAE
+AAAAAAAAAAAAAAD/AOMGAAAAAAoAAAAAAAAAAAAAAAgB5QAAAAAAEAAAAAAAAAAAAAAAEQGSCwAA
+AAAQAAAAAAAAAAAAAAARAa8LAAAAAAAAAAABAAAAdwoAAAwABAANAAQAAAAQABoAdgAAABAAeQB2
+AAAAAAB7AHYAfQDRAH0A9AAAAABDb250ZXh0VmFsdWVgMQBUaHJlYWRTYWZlT2JqZWN0UHJvdmlk
+ZXJgMQBHZXRJbnQzMgBTQ19iN2MyZTljNjlhM2Q0N2M3YjNhMDMwNzcyOTgyMTRlMgBzZXRfU3Rh
+Z2VNRDUAPE1vZHVsZT4ASW5wdXRJRABUAERpc3Bvc2VfX0luc3RhbmNlX18AQ3JlYXRlX19JbnN0
+YW5jZV9fAGdldF9UaWVtcG9EaWFEZVNlbWFuYQBnZXRfVGllbXBvRXNGaW5TZW1hbmEAZ2V0X1Rp
+ZW1wb1NlbWFuYQBtc2NvcmxpYgBNaWNyb3NvZnQuVmlzdWFsQmFzaWMAQ3JlYXRlSW5zdGFuY2UA
+Z2V0X0dldEluc3RhbmNlAGluc3RhbmNlAEdldEhhc2hDb2RlAFJ1bnRpbWVUeXBlSGFuZGxlAEdl
+dFR5cGVGcm9tSGFuZGxlAElucHV0TmFtZQBHZXREYXRlVGltZQBNaWNyb3NvZnQuU3FsU2VydmVy
+LkR0cy5QaXBlbGluZQBHZXRUeXBlAGdldF9UaWVtcG9UcmltZXN0cmUAZ2V0X0N1bHR1cmUAc2V0
+X0N1bHR1cmUAX3Jlc0N1bHR1cmUAQXBwbGljYXRpb25CYXNlAEFwcGxpY2F0aW9uU2V0dGluZ3NC
+YXNlAEVkaXRvckJyb3dzYWJsZVN0YXRlAEd1aWRBdHRyaWJ1dGUASGVscEtleXdvcmRBdHRyaWJ1
+dGUAR2VuZXJhdGVkQ29kZUF0dHJpYnV0ZQBEZWJ1Z2dlck5vblVzZXJDb2RlQXR0cmlidXRlAERl
+YnVnZ2FibGVBdHRyaWJ1dGUARWRpdG9yQnJvd3NhYmxlQXR0cmlidXRlAENvbVZpc2libGVBdHRy
+aWJ1dGUAQXNzZW1ibHlUaXRsZUF0dHJpYnV0ZQBTdGFuZGFyZE1vZHVsZUF0dHJpYnV0ZQBIaWRl
+TW9kdWxlTmFtZUF0dHJpYnV0ZQBBc3NlbWJseVRyYWRlbWFya0F0dHJpYnV0ZQBUYXJnZXRGcmFt
+ZXdvcmtBdHRyaWJ1dGUARGVidWdnZXJIaWRkZW5BdHRyaWJ1dGUAQXNzZW1ibHlGaWxlVmVyc2lv
+bkF0dHJpYnV0ZQBNeUdyb3VwQ29sbGVjdGlvbkF0dHJpYnV0ZQBBc3NlbWJseURlc2NyaXB0aW9u
+QXR0cmlidXRlAENvbXBpbGF0aW9uUmVsYXhhdGlvbnNBdHRyaWJ1dGUAQXNzZW1ibHlQcm9kdWN0
+QXR0cmlidXRlAEFzc2VtYmx5Q29weXJpZ2h0QXR0cmlidXRlAENMU0NvbXBsaWFudEF0dHJpYnV0
+ZQBTU0lTU2NyaXB0Q29tcG9uZW50RW50cnlQb2ludEF0dHJpYnV0ZQBBc3NlbWJseUNvbXBhbnlB
+dHRyaWJ1dGUAUnVudGltZUNvbXBhdGliaWxpdHlBdHRyaWJ1dGUAUHJlRXhlY3V0ZQBQb3N0RXhl
+Y3V0ZQBHZXRCeXRlAG1fVmFsdWUAZ2V0X1ZhbHVlAHNldF9WYWx1ZQBHZXRPYmplY3RWYWx1ZQBT
+eXN0ZW0uVGhyZWFkaW5nAFN5c3RlbS5SdW50aW1lLlZlcnNpb25pbmcAVG9TdHJpbmcATWF0aABN
+aWNyb3NvZnQuVmlzdWFsQmFzaWMuTXlTZXJ2aWNlcy5JbnRlcm5hbABnZXRfVGllbXBvRmVjaGFB
+Y3R1YWwAU3lzdGVtLkNvbXBvbmVudE1vZGVsAFNDX2I3YzJlOWM2OWEzZDQ3YzdiM2EwMzA3NzI5
+ODIxNGUyLmRsbABzZXRfU3RhZ2VNRDVfSXNOdWxsAGdldF9UaWVtcG9EaWFEZVNlbWFuYV9Jc051
+bGwAZ2V0X1RpZW1wb0VzRmluU2VtYW5hX0lzTnVsbABnZXRfVGllbXBvU2VtYW5hX0lzTnVsbABn
+ZXRfVGllbXBvVHJpbWVzdHJlX0lzTnVsbABnZXRfVGllbXBvRmVjaGFBY3R1YWxfSXNOdWxsAGdl
+dF9UaWVtcG9Fc0ZlcmlhZG9fSXNOdWxsAGdldF9UaWVtcG9EaWFEZUFuaW9fSXNOdWxsAGdldF9U
+aWVtcG9BbmlvX0lzTnVsbABnZXRfVGllbXBvU2VtYW5hQ2FsZW5kYXJpb19Jc051bGwAZ2V0X1Rp
+ZW1wb0HDsW9CaXNpZXN0b19Jc051bGwAZ2V0X1RpZW1wb0RpYURlTWVzX0lzTnVsbABnZXRfVGll
+bXBvTWVzX0lzTnVsbABnZXRfVGllbXBvU2VtYW5hc0RlbEHDsW9MYWJvcmFsZXNfSXNOdWxsAFNl
+dE51bGwAc2V0X0l0ZW0AU3lzdGVtAFN5c3RlbS5Db21wb25lbnRNb2RlbC5EZXNpZ24AU2NyaXB0
+TWFpbgBnZXRfQXBwbGljYXRpb24ATXlBcHBsaWNhdGlvbgBTeXN0ZW0uQ29uZmlndXJhdGlvbgBT
+eXN0ZW0uR2xvYmFsaXphdGlvbgBTeXN0ZW0uUmVmbGVjdGlvbgBJbnZhbGlkT3BlcmF0aW9uRXhj
+ZXB0aW9uAFN0cmluZ0NvbXBhcmlzb24AZ2V0X1RpZW1wb0VzRmVyaWFkbwBDdWx0dXJlSW5mbwBn
+ZXRfVGllbXBvRGlhRGVBbmlvAGdldF9UaWVtcG9BbmlvAGdldF9UaWVtcG9TZW1hbmFDYWxlbmRh
+cmlvAGdldF9UaWVtcG9Bw7FvQmlzaWVzdG8AT3V0cHV0TmFtZU1hcABPdXRwdXRNYXAAbV9BcHBP
+YmplY3RQcm92aWRlcgBtX1VzZXJPYmplY3RQcm92aWRlcgBtX0NvbXB1dGVyT2JqZWN0UHJvdmlk
+ZXIAbV9NeVdlYlNlcnZpY2VzT2JqZWN0UHJvdmlkZXIARW50cmFkYTBCdWZmZXIAUGlwZWxpbmVC
+dWZmZXIAU2NyaXB0QnVmZmVyAGdldF9SZXNvdXJjZU1hbmFnZXIAU3lzdGVtLkNvZGVEb20uQ29t
+cGlsZXIAZ2V0X1VzZXIARW50ZXIAZ2V0X0NvbXB1dGVyAE15Q29tcHV0ZXIAX3Jlc01ncgBBY3Rp
+dmF0b3IALmN0b3IALmNjdG9yAE1vbml0b3IAU3lzdGVtLkRpYWdub3N0aWNzAGdldF9UaWVtcG9E
+aWFEZU1lcwBnZXRfVGllbXBvTWVzAE1pY3Jvc29mdC5WaXN1YWxCYXNpYy5EZXZpY2VzAGdldF9X
+ZWJTZXJ2aWNlcwBNeVdlYlNlcnZpY2VzAE1pY3Jvc29mdC5WaXN1YWxCYXNpYy5BcHBsaWNhdGlv
+blNlcnZpY2VzAFN5c3RlbS5SdW50aW1lLkludGVyb3BTZXJ2aWNlcwBNaWNyb3NvZnQuVmlzdWFs
+QmFzaWMuQ29tcGlsZXJTZXJ2aWNlcwBTeXN0ZW0uUnVudGltZS5Db21waWxlclNlcnZpY2VzAFN5
+c3RlbS5SZXNvdXJjZXMAU0NfYjdjMmU5YzY5YTNkNDdjN2IzYTAzMDc3Mjk4MjE0ZTIuTXkuUmVz
+b3VyY2VzAE15UmVzb3VyY2VzAFNDX2I3YzJlOWM2OWEzZDQ3YzdiM2EwMzA3NzI5ODIxNGUyLlJl
+c291cmNlcy5yZXNvdXJjZXMARGVidWdnaW5nTW9kZXMAZ2V0X1RpZW1wb1NlbWFuYXNEZWxBw7Fv
+TGFib3JhbGVzAFZhcmlhYmxlcwBCdWZmZXJDb2x1bW5JbmRleGVzAEdldENvbHVtbkluZGV4ZXMA
+TXlTZXR0aW5ncwBFcXVhbHMAQ29ubmVjdGlvbnMAUnVudGltZUhlbHBlcnMAbV9TeW5jT2JqZWN0
+AE15UHJvamVjdABFbmRPZlJvd3NldABFeGl0AFVzZXJDb21wb25lbnQAUGFyZW50Q29tcG9uZW50
+AFNjcmlwdENvbXBvbmVudABNaWNyb3NvZnQuU3FsU2VydmVyLlR4U2NyaXB0AE1pY3Jvc29mdC5T
+cWxTZXJ2ZXIuUGlwZWxpbmVIb3N0AEVudHJhZGEwX1Byb2Nlc3NJbnB1dABtX0NvbnRleHQARW50
+cmFkYTBfUHJvY2Vzc0lucHV0Um93AE5leHRSb3cAU0NfYjdjMmU5YzY5YTNkNDdjN2IzYTAzMDc3
+Mjk4MjE0ZTIuTXkAZ2V0X0Fzc2VtYmx5AAAAAAAxTQB5AC4AUgBlAHMAbwB1AHIAYwBlAHMALgBN
+AHkAUgBlAHMAbwB1AHIAYwBlAHMAAIC9TABhACAAcAByAG8AcABpAGUAZABhAGQAIABJAHMATgB1
+AGwAbAAgAG4AbwAgAHAAdQBlAGQAZQAgAGUAcwB0AGEAYgBsAGUAYwBlAHIAcwBlACAAZQBuACAA
+RgBhAGwAcwBlAC4AIABFAG4AIABzAHUAIABsAHUAZwBhAHIALAAgAGEAcwBpAGcAbgBlACAAdQBu
+ACAAdgBhAGwAbwByACAAYQAgAGwAYQAgAGMAbwBsAHUAbQBuAGEALgAAE0UAbgB0AHIAYQBkAGEA
+IAAwAAAAAPUEVjYuCDNGuEQf4ppKP5UABCABAQgDIAABBSABARERBCABAQ4EIAEBAgUgAgEODgUg
+AQERRQcgBAEODg4OBhUSNAESDAYVEjQBEggGFRI0ARJlBhUSNAESMAQgABMABwABEm0RgKUFIAAS
+gKkHIAIBDhKAqQsgAwESgI0dCBKAkQQGEoCNAwYdCAYgARGAlQgEIAECCAQgAQgIBCABBQgFIAIB
+CBwDBwECAyAAAgcgAgIOEYC1BSABHQgIBAABHBwEAAEBHAQgAQIcAyAACAMgAA4EBwEeAAIeAAUQ
+AQAeAAQKAR4ABAcBEwAGFRI0ARMABwYVEnEBEwAGFRJxARMAAhMABAoBEwAFIAEBEwAIt3pcVhk0
+4IkIsD9ffxHVCjoIiYRdzYCAzJEHBhUSNAESDAcGFRI0ARIIBwYVEjQBEmUHBhUSNAESMAMGEnkD
+BhJ9AwYSJAMGEigEBhKAmQMGEiwCBhwDAAABBAAAEgwEAAASCAQAABJlBAAAEjAEAAASeQQAABJ9
+BQABARJ9BSABARIcBSAAEYCVAyAABQsgBAEIDhKAjRKAkQYgAQESgJkEAAASLAQgABJtBxABAR4A
+HgAHMAEBARAeAAQIABIMBAgAEggECAASZQQIABIwBAgAEnkECAASfQUoABGAlQMoAAIDKAAIAygA
+BQMoAA4ECAASLAQoABMACAEACAAAAAAAHgEAAQBUAhZXcmFwTm9uRXhjZXB0aW9uVGhyb3dzAQgB
+AAIAAAAAACgBACNTQ19iN2MyZTljNjlhM2Q0N2M3YjNhMDMwNzcyOTgyMTRlMgAABQEAAAAAFgEA
+EUNvcHlyaWdodCBAICAyMDI0AAAFAQABAAApAQAkOGI3YzlhMjYtMTRmYy00OTIxLWI3MjEtZTJl
+OGI0OTgxN2MyAAAMAQAHMS4wLjAuMAAASQEAGi5ORVRGcmFtZXdvcmssVmVyc2lvbj12NC43AQBU
+DhRGcmFtZXdvcmtEaXNwbGF5TmFtZRIuTkVUIEZyYW1ld29yayA0LjcEAQAAAAgBAAEAAAAAABgB
+AApNeVRlbXBsYXRlCDExLjAuMC4wAABhAQA0U3lzdGVtLldlYi5TZXJ2aWNlcy5Qcm90b2NvbHMu
+U29hcEh0dHBDbGllbnRQcm90b2NvbBJDcmVhdGVfX0luc3RhbmNlX18TRGlzcG9zZV9fSW5zdGFu
+Y2VfXwAAABABAAtNeS5Db21wdXRlcgAAEwEADk15LkFwcGxpY2F0aW9uAAAMAQAHTXkuVXNlcgAA
+EwEADk15LldlYlNlcnZpY2VzAAAAALQAAADOyu++AQAAAJEAAABsU3lzdGVtLlJlc291cmNlcy5S
+ZXNvdXJjZVJlYWRlciwgbXNjb3JsaWIsIFZlcnNpb249NC4wLjAuMCwgQ3VsdHVyZT1uZXV0cmFs
+LCBQdWJsaWNLZXlUb2tlbj1iNzdhNWM1NjE5MzRlMDg5I1N5c3RlbS5SZXNvdXJjZXMuUnVudGlt
+ZVJlc291cmNlU2V0AgAAAAAAAAAAAAAAUEFEUEFEULQAAAAIQwAAAAAAAAAAAAAiQwAAACAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAFEMAAAAAAAAAAAAAAABfQ29yRGxsTWFpbgBtc2NvcmVlLmRsbAAA
+AAAA/yUAIAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAEAAA
+ABgAAIAAAAAAAAAAAAAAAAAAAAEAAQAAADAAAIAAAAAAAAAAAAAAAAAAAAEAAAAAAEgAAABYYAAA
+7AMAAAAAAAAAAAAA7AM0AAAAVgBTAF8AVgBFAFIAUwBJAE8ATgBfAEkATgBGAE8AAAAAAL0E7/4A
+AAEAAAABAAAAAAAAAAEAAAAAAD8AAAAAAAAABAAAAAIAAAAAAAAAAAAAAAAAAABEAAAAAQBWAGEA
+cgBGAGkAbABlAEkAbgBmAG8AAAAAACQABAAAAFQAcgBhAG4AcwBsAGEAdABpAG8AbgAAAAAAAACw
+BEwDAAABAFMAdAByAGkAbgBnAEYAaQBsAGUASQBuAGYAbwAAACgDAAABADAAMAAwADAAMAA0AGIA
+MAAAABoAAQABAEMAbwBtAG0AZQBuAHQAcwAAAAAAAAAiAAEAAQBDAG8AbQBwAGEAbgB5AE4AYQBt
+AGUAAAAAAAAAAABwACQAAQBGAGkAbABlAEQAZQBzAGMAcgBpAHAAdABpAG8AbgAAAAAAUwBDAF8A
+YgA3AGMAMgBlADkAYwA2ADkAYQAzAGQANAA3AGMANwBiADMAYQAwADMAMAA3ADcAMgA5ADgAMgAx
+ADQAZQAyAAAAMAAIAAEARgBpAGwAZQBWAGUAcgBzAGkAbwBuAAAAAAAxAC4AMAAuADAALgAwAAAA
+cAAoAAEASQBuAHQAZQByAG4AYQBsAE4AYQBtAGUAAABTAEMAXwBiADcAYwAyAGUAOQBjADYAOQBh
+ADMAZAA0ADcAYwA3AGIAMwBhADAAMwAwADcANwAyADkAOAAyADEANABlADIALgBkAGwAbAAAAEgA
+EgABAEwAZQBnAGEAbABDAG8AcAB5AHIAaQBnAGgAdAAAAEMAbwBwAHkAcgBpAGcAaAB0ACAAQAAg
+ACAAMgAwADIANAAAACoAAQABAEwAZQBnAGEAbABUAHIAYQBkAGUAbQBhAHIAawBzAAAAAAAAAAAA
+eAAoAAEATwByAGkAZwBpAG4AYQBsAEYAaQBsAGUAbgBhAG0AZQAAAFMAQwBfAGIANwBjADIAZQA5
+AGMANgA5AGEAMwBkADQANwBjADcAYgAzAGEAMAAzADAANwA3ADIAOQA4ADIAMQA0AGUAMgAuAGQA
+bABsAAAAaAAkAAEAUAByAG8AZAB1AGMAdABOAGEAbQBlAAAAAABTAEMAXwBiADcAYwAyAGUAOQBj
+ADYAOQBhADMAZAA0ADcAYwA3AGIAMwBhADAAMwAwADcANwAyADkAOAAyADEANABlADIAAAA0AAgA
+AQBQAHIAbwBkAHUAYwB0AFYAZQByAHMAaQBvAG4AAAAxAC4AMAAuADAALgAwAAAAOAAIAAEAQQBz
+AHMAZQBtAGIAbAB5ACAAVgBlAHIAcwBpAG8AbgAAADEALgAwAC4AMAAuADAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAADAAAADQzAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
+                  </arrayElements>
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del proyecto de Microsoft Visual Studio Tools para Aplicaciones. Los nombres de proyecto deben ser únicos en el paquete."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_b7c2e9c69a3d47c7b3a03077298214e2</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el lenguaje de programación que utiliza el script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">VisualBasic</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de solo lectura."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de lectura/escritura."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Lista de puntos de interrupción presentes en el script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Suma de comprobación para comparar los metadatos del componente con los códigos compilados."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE">36</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0]"
+                  hasSideEffects="true"
+                  name="Entrada 0">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_FechaActual]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="Tiempo_FechaActual"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_Anio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Anio"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_Trimestre]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Trimestre"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_Mes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Mes"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_Semana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_Semana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeAnio]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeAnio"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeMes]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeMes"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_DiaDeSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_DiaDeSemana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_EsFinSemana]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFinSemana"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_EsFeriado]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_EsFeriado"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_SemanaCalendario]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanaCalendario"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      cachedDataType="i4"
+                      cachedName="Tiempo_SemanasDelAñoLaborales"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]" />
+                    <inputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0].Columns[Tiempo_AñoBisiesto]"
+                      cachedDataType="ui1"
+                      cachedName="Tiempo_AñoBisiesto"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Stage MD5.Outputs[Salida 0]"
+                  name="Salida 0"
+                  synchronousInputId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage MD5.Outputs[Salida 0].Columns[StageMD5]"
+                      dataType="wstr"
+                      length="255"
+                      lineageId="Package\DF Dim Tiempo\Stage MD5.Outputs[Salida 0].Columns[StageMD5]"
+                      name="StageMD5" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Tiempo\Stage Tiempo"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Stage Tiempo"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT Tiempo_FechaActual,
+		Tiempo_Anio,
+		Tiempo_Trimestre,
+		Tiempo_Mes,
+		Tiempo_Semana,
+		Tiempo_DiaDeAnio,
+		Tiempo_DiaDeMes,
+		Tiempo_DiaDeSemana,
+		Tiempo_EsFinSemana,
+		Tiempo_EsFeriado,
+		Tiempo_Comentarios,
+		Tiempo_SemanaCalendario,
+		Tiempo_SemanasDelAñoLaborales,
+		Tiempo_AñoBisiesto
+FROM [STAGE_NORTHWND].[dbo].[Stage_Tiempo]
+ORDER BY Tiempo_FechaActual</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF Dim Tiempo\Stage Tiempo.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB]"
+                  isSorted="true"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      name="Tiempo_FechaActual"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Anio]"
+                      name="Tiempo_Anio"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      name="Tiempo_Trimestre"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Mes]"
+                      name="Tiempo_Mes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Semana]"
+                      name="Tiempo_Semana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      name="Tiempo_DiaDeAnio"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      name="Tiempo_DiaDeMes"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      name="Tiempo_DiaDeSemana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      name="Tiempo_EsFinSemana"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      name="Tiempo_EsFeriado"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Comentarios]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Comentarios]"
+                      length="20"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_Comentarios]"
+                      name="Tiempo_Comentarios"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      name="Tiempo_SemanaCalendario"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      name="Tiempo_SemanasDelAñoLaborales"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      name="Tiempo_AñoBisiesto"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      name="Tiempo_FechaActual" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Anio]"
+                      dataType="i4"
+                      name="Tiempo_Anio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      name="Tiempo_Trimestre" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Mes]"
+                      dataType="i4"
+                      name="Tiempo_Mes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Semana]"
+                      dataType="i4"
+                      name="Tiempo_Semana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeAnio" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeMes" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      name="Tiempo_DiaDeSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      name="Tiempo_EsFinSemana" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      name="Tiempo_EsFeriado" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_Comentarios]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      name="Tiempo_Comentarios" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      name="Tiempo_SemanaCalendario" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      name="Tiempo_SemanasDelAñoLaborales" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB].ExternalColumns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      name="Tiempo_AñoBisiesto" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_FechaActual]"
+                      name="Tiempo_FechaActual" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Anio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Anio]"
+                      name="Tiempo_Anio" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Trimestre]"
+                      name="Tiempo_Trimestre" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Mes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Mes]"
+                      name="Tiempo_Mes" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Semana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Semana]"
+                      name="Tiempo_Semana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeAnio]"
+                      name="Tiempo_DiaDeAnio" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeMes]"
+                      name="Tiempo_DiaDeMes" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_DiaDeSemana]"
+                      name="Tiempo_DiaDeSemana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFinSemana]"
+                      name="Tiempo_EsFinSemana" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_EsFeriado]"
+                      name="Tiempo_EsFeriado" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Comentarios]"
+                      codePage="1252"
+                      dataType="str"
+                      length="20"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_Comentarios]"
+                      name="Tiempo_Comentarios" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanaCalendario]"
+                      name="Tiempo_SemanaCalendario" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_SemanasDelAñoLaborales]"
+                      name="Tiempo_SemanasDelAñoLaborales" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      dataType="ui1"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[Tiempo_AñoBisiesto]"
+                      name="Tiempo_AñoBisiesto" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Registro Nuevo]"
+              endId="Package\DF Dim Tiempo\Cantidad Registros Nuevos.Inputs[Entrada de Recuento de filas 1]"
+              name="Registro Nuevo"
+              startId="Package\DF Dim Tiempo\División condicional.Outputs[Registro Nuevo]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida 0]"
+              endId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada izquierda de combinación de mezcla]"
+              name="Salida 0"
+              startId="Package\DF Dim Tiempo\Stage MD5.Outputs[Salida 0]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida 01]"
+              endId="Package\DF Dim Tiempo\Combinación de mezcla.Inputs[Entrada derecha de combinación de mezcla]"
+              name="Salida 0"
+              startId="Package\DF Dim Tiempo\Data Mart MD5.Outputs[Salida 0]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida de combinación de mezcla]"
+              endId="Package\DF Dim Tiempo\División condicional.Inputs[Entrada de división condicional]"
+              name="Salida de combinación de mezcla"
+              startId="Package\DF Dim Tiempo\Combinación de mezcla.Outputs[Salida de combinación de mezcla]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida de origen de OLE DB]"
+              endId="Package\DF Dim Tiempo\Stage MD5.Inputs[Entrada 0]"
+              name="Salida de origen de OLE DB"
+              startId="Package\DF Dim Tiempo\Stage Tiempo.Outputs[Salida de origen de OLE DB]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida de origen de OLE DB1]"
+              endId="Package\DF Dim Tiempo\Data Mart MD5.Inputs[Entrada 0]"
+              name="Salida de origen de OLE DB"
+              startId="Package\DF Dim Tiempo\Data Mart Dim Tiempo.Outputs[Salida de origen de OLE DB]" />
+            <path
+              refId="Package\DF Dim Tiempo.Paths[Salida de Recuento de filas 1]"
+              endId="Package\DF Dim Tiempo\Destino Data Mart Tiempo.Inputs[Entrada de destino de OLE DB]"
+              name="Salida de Recuento de filas 1"
+              startId="Package\DF Dim Tiempo\Cantidad Registros Nuevos.Outputs[Salida de Recuento de filas 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="156,42"
+          Id="Package\DF Dim Tiempo"
+          TopLeft="280,24" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF Dim Tiempo">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="147,42"
+          Id="Package\DF Dim Tiempo\Stage Tiempo"
+          TopLeft="264,20" />
+        <NodeLayout
+          Size="189,42"
+          Id="Package\DF Dim Tiempo\Data Mart Dim Tiempo"
+          TopLeft="561,20" />
+        <NodeLayout
+          Size="134,42"
+          Id="Package\DF Dim Tiempo\Stage MD5"
+          TopLeft="268,90" />
+        <NodeLayout
+          Size="153,42"
+          Id="Package\DF Dim Tiempo\Data Mart MD5"
+          TopLeft="576,86" />
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida de origen de OLE DB]"
+          TopLeft="336.25,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,28"
+              Start="0,0"
+              End="0,20.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida de origen de OLE DB1]"
+          TopLeft="654,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,24"
+              Start="0,0"
+              End="0,16.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="196,42"
+          Id="Package\DF Dim Tiempo\Combinación de mezcla"
+          TopLeft="388,157" />
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida 0]"
+          TopLeft="335,132">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="119.666666666667,25"
+              Start="0,0"
+              End="119.666666666667,17.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,10.8785425101215" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,10.8785425101215"
+                    Point2="0,14.8785425101215"
+                    Point3="4,14.8785425101215" />
+                  <mssgle:LineSegment
+                    End="115.666666666667,14.8785425101215" />
+                  <mssgle:CubicBezierSegment
+                    Point1="115.666666666667,14.8785425101215"
+                    Point2="119.666666666667,14.8785425101215"
+                    Point3="119.666666666667,18.8785425101215" />
+                  <mssgle:LineSegment
+                    End="119.666666666667,17.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida 01]"
+          TopLeft="652.5,128">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-135.166666666667,29"
+              Start="0,0"
+              End="-135.166666666667,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.2591093117409" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.2591093117409"
+                    Point2="0,17.2591093117409"
+                    Point3="-4,17.2591093117409" />
+                  <mssgle:LineSegment
+                    End="-131.166666666667,17.2591093117409" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-131.166666666667,17.2591093117409"
+                    Point2="-135.166666666667,17.2591093117409"
+                    Point3="-135.166666666667,21.2591093117409" />
+                  <mssgle:LineSegment
+                    End="-135.166666666667,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="176,42"
+          Id="Package\DF Dim Tiempo\División condicional"
+          TopLeft="393,222" />
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida de combinación de mezcla]"
+          TopLeft="483.5,199">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,23"
+              Start="0,0"
+              End="0,15.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="213,42"
+          Id="Package\DF Dim Tiempo\Cantidad Registros Nuevos"
+          TopLeft="369,283" />
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Registro Nuevo]"
+          TopLeft="393,243">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="82.5,40"
+              Start="0,0"
+              End="82.5,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="78.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="78.5,0"
+                    Point2="82.5,0"
+                    Point3="82.5,4" />
+                  <mssgle:LineSegment
+                    End="82.5,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="48.42296875,-17.384765625,68.1540625,11.384765625"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="207,42"
+          Id="Package\DF Dim Tiempo\Destino Data Mart Tiempo"
+          TopLeft="391,347" />
+        <EdgeLayout
+          Id="Package\DF Dim Tiempo.Paths[Salida de Recuento de filas 1]"
+          TopLeft="369,304">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="22,64"
+              Start="0,0"
+              End="14.5,64">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="-18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.5,0"
+                    Point2="-22.5,0"
+                    Point3="-22.5,4" />
+                  <mssgle:LineSegment
+                    End="-22.5,60" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-22.5,60"
+                    Point2="-22.5,64"
+                    Point3="-18.5,64" />
+                  <mssgle:LineSegment
+                    End="14.5,64" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF Dim Tiempo\Stage Tiempo">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF Dim Tiempo\Data Mart Dim Tiempo">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF Dim Tiempo\Destino Data Mart Tiempo">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

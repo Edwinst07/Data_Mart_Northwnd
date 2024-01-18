@@ -1,0 +1,578 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/30/2023 12:04:20 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-665CT7P"
+  DTS:CreatorName="DESKTOP-665CT7P\Lenovo"
+  DTS:DTSID="{58199424-62C7-4108-9F5D-439B8279A4AF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5314.0"
+  DTS:LocaleID="3082"
+  DTS:ObjectName="DimCategoria"
+  DTS:PackageType="5"
+  DTS:VersionBuild="5"
+  DTS:VersionGUID="{69E7C06B-24E8-48B2-8267-0188721881F0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{822C1BB1-51AF-4789-A5D8-2417C3049CA7}"
+      DTS:ObjectName="LocalHost.DATAMART_NORTHWND">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=DATAMART_NORTHWND;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-DimCategoria-{822C1BB1-51AF-4789-A5D8-2417C3049CA7}LocalHost.DATAMART_NORTHWND;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{ABBEAB09-19B6-4BAF-A11B-9AA6B9C65E09}"
+      DTS:ObjectName="LocalHost.STAGE_NORTHWND">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=.;Initial Catalog=STAGE_NORTHWND;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-DimCategoria-{ABBEAB09-19B6-4BAF-A11B-9AA6B9C65E09}LocalHost.STAGE_NORTHWND;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DF Dim Categoria"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Tarea Flujo de datos"
+      DTS:DTSID="{530726C6-B2F4-4DE8-B54B-A6F0184EF9E1}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DF Dim Categoria"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DF Dim Categoria\Data Mart Dim Categoria"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Data Mart Dim Categoria"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+	[Categoria_Skey],
+	[Categoria_Codigo],
+	[Categoria_Nombre]
+FROM [DATAMART_NORTHWND].[dbo].[Dim_Categoria]
+ORDER BY [Categoria_Codigo]</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.DATAMART_NORTHWND]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB]"
+                  isSorted="true"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Skey]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Skey]"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Skey]"
+                      name="Categoria_Skey"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Codigo]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Codigo]"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Codigo]"
+                      name="Categoria_Codigo"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Nombre]"
+                      length="15"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Nombre]"
+                      name="Categoria_Nombre"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Skey]"
+                      dataType="i4"
+                      name="Categoria_Skey" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Codigo]"
+                      dataType="i4"
+                      name="Categoria_Codigo" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="Categoria_Nombre" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Skey]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Skey]"
+                      name="Categoria_Skey" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Codigo]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Codigo]"
+                      name="Categoria_Codigo" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Nombre]"
+                      name="Categoria_Nombre" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Data Mart Dim Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Categoria\Data Mart MD5"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;13"
+              description="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma."
+              name="Data Mart MD5"
+              version="13">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Almacena el código fuente del componente"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Almacena la representación binaria del componente"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del proyecto de Microsoft Visual Studio Tools para Aplicaciones. Los nombres de proyecto deben ser únicos en el paquete."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_55e38cf14d4b4ccdb7698d73a7dd0812</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el lenguaje de programación que utiliza el script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de solo lectura."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de lectura/escritura."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Lista de puntos de interrupción presentes en el script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Suma de comprobación para comparar los metadatos del componente con los códigos compilados."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Categoria\Data Mart MD5.Inputs[Entrada 0]"
+                  hasSideEffects="true"
+                  name="Entrada 0">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Categoria\Data Mart MD5.Outputs[Salida 0]"
+                  name="Salida 0"
+                  synchronousInputId="Package\DF Dim Categoria\Data Mart MD5.Inputs[Entrada 0]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Categoria\Stage Categoria"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="Origen de OLE DB;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;7"
+              description="Origen de OLE DB"
+              name="Stage Categoria"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Número de segundos antes de que se agote el tiempo de espera de un comando. Un valor de 0 indica un tiempo de espera infinito."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica la variable que contiene el nombre del objeto de base de datos usado para abrir un conjunto de filas."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="Comando SQL para ejecutar."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT
+	[Categoria_Codigo],
+	[Categoria_Nombre]
+From [STAGE_NORTHWND].[dbo].[Stage_Categoria]
+ORDER BY [Categoria_Codigo]</property>
+                <property
+                  dataType="System.String"
+                  description="Variable que contiene el comando SQL para ejecutar."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica la página de códigos de columna para utilizar cuando la información de página de códigos no está disponible en el origen de datos."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Fuerza el uso del valor de la propiedad DefaultCodePage al describir datos de caracteres."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Especifica el modo utilizado para obtener acceso a la base de datos."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="Asignaciones entre los parámetros del comando SQL y las variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DF Dim Categoria\Stage Categoria.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+                  connectionManagerRefId="Package.ConnectionManagers[LocalHost.STAGE_NORTHWND]"
+                  description="La conexión de tiempo de ejecución OLE DB usada para obtener acceso a la base de datos."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB]"
+                  isSorted="true"
+                  name="Salida de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Codigo]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Codigo]"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Codigo]"
+                      name="Categoria_Codigo"
+                      sortKeyPosition="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversión"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Nombre]"
+                      length="15"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].Columns[Categoria_Nombre]"
+                      name="Categoria_Nombre"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Codigo]"
+                      dataType="i4"
+                      name="Categoria_Codigo" />
+                    <externalMetadataColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de origen de OLE DB].ExternalColumns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      name="Categoria_Nombre" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB]"
+                  isErrorOut="true"
+                  name="Salida de error de origen de OLE DB">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Codigo]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Codigo]"
+                      name="Categoria_Codigo" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Nombre]"
+                      codePage="1252"
+                      dataType="str"
+                      length="15"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[Categoria_Nombre]"
+                      name="Categoria_Nombre" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DF Dim Categoria\Stage Categoria.Outputs[Salida de error de origen de OLE DB].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DF Dim Categoria\Stage MD5"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma.;Microsoft Corporation; Microsoft SQL Server; Microsoft Corporation; Todos los derechos reservados; http://www.microsoft.com/sql/support;13"
+              description="Incluye y ejecuta código de scripts personalizados. Por ejemplo, se usa para aplicar una regla de negocios que limita el intervalo de valores válidos de una columna de ingresos o para sumar los valores de dos columnas y calcular el promedio de la suma."
+              name="Stage MD5"
+              version="13">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Almacena el código fuente del componente"
+                  isArray="true"
+                  name="SourceCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Almacena la representación binaria del componente"
+                  isArray="true"
+                  name="BinaryCode"
+                  state="cdata">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el nombre del proyecto de Microsoft Visual Studio Tools para Aplicaciones. Los nombres de proyecto deben ser únicos en el paquete."
+                  name="VSTAProjectName"
+                  typeConverter="NOTBROWSABLE">SC_c96455001b754d5c9365160d913a14bd</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica el lenguaje de programación que utiliza el script."
+                  name="ScriptLanguage"
+                  typeConverter="Microsoft.SqlServer.VSTAHosting.ScriptingLanguages">CSharp</property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de solo lectura."
+                  name="ReadOnlyVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Especifica una lista separada por comas de variables de lectura/escritura."
+                  name="ReadWriteVariables"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ScriptUIWriteableVariablePickerDlg"></property>
+                <property
+                  dataType="System.String"
+                  description="Lista de puntos de interrupción presentes en el script."
+                  isArray="true"
+                  name="BreakpointCollection"
+                  typeConverter="NOTBROWSABLE">
+                  <arrayElements
+                    arrayElementCount="0" />
+                </property>
+                <property
+                  dataType="System.String"
+                  description="Suma de comprobación para comparar los metadatos del componente con los códigos compilados."
+                  name="MetadataChecksum140"
+                  typeConverter="NOTBROWSABLE"></property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.ScriptComponentHost</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DF Dim Categoria\Stage MD5.Inputs[Entrada 0]"
+                  hasSideEffects="true"
+                  name="Entrada 0">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DF Dim Categoria\Stage MD5.Outputs[Salida 0]"
+                  name="Salida 0"
+                  synchronousInputId="Package\DF Dim Categoria\Stage MD5.Inputs[Entrada 0]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--Esta sección CDATA contiene la información de diseño del paquete. Esta sección incluye información como, por ejemplo, las coordenadas (x,y), el ancho y el alto.-->
+<!--Si edita manualmente esta sección y comete un error, puede eliminarlo. -->
+<!--El paquete podrá cargarse normalmente, pero se perderá la información de diseño anterior y el diseñador reorganizará los elementos automáticamente en la superficie de diseño.-->
+<Objects
+  Version="8">
+  <!--Cada uno de los nodos siguientes contiene propiedades que no afectan al comportamiento en tiempo de ejecución.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="167,42"
+          Id="Package\DF Dim Categoria"
+          TopLeft="330,53" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DF Dim Categoria">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="153,42"
+          Id="Package\DF Dim Categoria\Data Mart MD5"
+          TopLeft="468,165" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\DF Dim Categoria\Stage Categoria"
+          TopLeft="155,44" />
+        <NodeLayout
+          Size="200,42"
+          Id="Package\DF Dim Categoria\Data Mart Dim Categoria"
+          TopLeft="460,37" />
+        <NodeLayout
+          Size="134,42"
+          Id="Package\DF Dim Categoria\Stage MD5"
+          TopLeft="159,163" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF Dim Categoria\Stage Categoria">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DF Dim Categoria\Data Mart Dim Categoria">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
